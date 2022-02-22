@@ -184,7 +184,8 @@ namespace RentOfEquipment.Windows
                 }
             }
 
-          
         }
     }
 }
+
+//////
