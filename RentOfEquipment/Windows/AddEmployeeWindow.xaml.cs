@@ -165,7 +165,7 @@ namespace RentOfEquipment.Windows
                     newEmployee.Email = txtEmail.Text;
 
                     // ?*@?*.?*
-
+                    //
                     newEmployee.IdRole = (cmbRole.SelectedItem as EF.Role).Id;
                     newEmployee.Login = txtLogin.Text;
                     newEmployee.Password = txtPassword.Password;
