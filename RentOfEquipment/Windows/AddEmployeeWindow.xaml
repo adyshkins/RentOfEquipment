@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="AddEmployeeWindow" 
         WindowStartupLocation="CenterScreen"
-        Height="550" 
+        Height="750" 
         Width="600"
         MinHeight="450"
         MinWidth="500">
@@ -19,6 +19,10 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -184,8 +188,37 @@
                      VerticalContentAlignment="Center"
                      MaxLength="50"/>
 
+
+        <Border Background="LightGray"
+                Grid.Row="9"
+                Grid.ColumnSpan="2"
+                Grid.RowSpan="3"
+                Width="150"
+                Margin="5"
+                CornerRadius="10">
+            <Image x:Name="photoUser" 
+                   Source="/RentOfEquipment;component/Res/userDef.jpg"/>
+        </Border>
+
+        <Button x:Name="btnChoosePhoto"
+                Grid.Row="12" 
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Width="150"
+                Height="30"
+                Content="Выбрать фото"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Margin="10 0"
+                FontSize="16"
+                VerticalContentAlignment="Center"
+                Background="{x:Null}"
+                BorderThickness="0"
+                Click="btnChoosePhoto_Click"/>
+
+
         <Button x:Name="btnAdd"
-                Grid.Row="9" 
+                Grid.Row="13" 
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 Width="150"

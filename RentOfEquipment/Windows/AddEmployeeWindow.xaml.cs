@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +22,8 @@ namespace RentOfEquipment.Windows
     public partial class AddEmployeeWindow : Window
     {
         bool isEdit = false;
-        EF.Employee editEmployee = new EF.Employee(); 
+        EF.Employee editEmployee = new EF.Employee();
+        string pathPhoto = null;
 
         public AddEmployeeWindow()
         {
@@ -50,6 +53,21 @@ namespace RentOfEquipment.Windows
 
             cmbRole.SelectedIndex = employee.IdRole - 1;
 
+            if (employee.Photo != null)
+            {
+                using (MemoryStream stream = new MemoryStream(employee.Photo))
+                {
+                    BitmapImage bitmapImage = new BitmapImage();
+                    bitmapImage.BeginInit();
+                    bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmapImage.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
+                    bitmapImage.StreamSource = stream;
+                    bitmapImage.EndInit();
+
+                    photoUser.Source = bitmapImage;
+                }
+
+            }
 
             tbTitle.Text = "Изменение данных работника";
             btnAdd.Content = "Сохранить";
@@ -99,11 +117,11 @@ namespace RentOfEquipment.Windows
                 return;
             }
 
-            if (!Int32.TryParse(txtPhone.Text, out int res))
-            {
-                MessageBox.Show("Недопустимые символы", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
+            //if (!Int32.TryParse(txtPhone.Text, out int res))
+            //{
+            //    MessageBox.Show("Недопустимые символы", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            //    return;
+            //}
 
             if (isEdit) // Изменение пользователя
             {
@@ -129,6 +147,11 @@ namespace RentOfEquipment.Windows
                     editEmployee.IdRole = (cmbRole.SelectedItem as EF.Role).Id;
                     editEmployee.Login = txtLogin.Text;
                     editEmployee.Password = txtPassword.Password;
+
+                    if (pathPhoto != null)
+                    {
+                        editEmployee.Photo = File.ReadAllBytes(pathPhoto);
+                    }
 
                     ClassHelper.AppData.Context.SaveChanges();
 
@@ -156,6 +179,7 @@ namespace RentOfEquipment.Windows
              
                 try
                 {
+
                     EF.Employee newEmployee = new EF.Employee();
 
                     newEmployee.LastName = txtLName.Text;
@@ -170,8 +194,22 @@ namespace RentOfEquipment.Windows
                     newEmployee.Login = txtLogin.Text;
                     newEmployee.Password = txtPassword.Password;
 
+                    if (pathPhoto != null)
+                    {
+                        editEmployee.Photo = File.ReadAllBytes(pathPhoto);
+                    }
+
+
 
                     ClassHelper.AppData.Context.Employee.Add(newEmployee);
+
+                    ClassHelper.AppData.Context.Employee.Add(new EF.Employee() 
+                    {
+                        Login = txtLogin.Text,
+                        Photo = File.ReadAllBytes(pathPhoto),
+
+                    });
+
                     ClassHelper.AppData.Context.SaveChanges();
 
                     MessageBox.Show("Пользователь добавлен");
@@ -184,6 +222,16 @@ namespace RentOfEquipment.Windows
                 }
             }
 
+        }
+
+        private void btnChoosePhoto_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFile = new OpenFileDialog();
+            if (openFile.ShowDialog() == true)
+            {
+                photoUser.Source = new BitmapImage(new Uri(openFile.FileName));
+                pathPhoto = openFile.FileName;
+            }
         }
     }
 }

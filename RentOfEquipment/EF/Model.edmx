@@ -43,6 +43,7 @@
           <Property Name="IdRole" Type="int" Nullable="false" />
           <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Photo" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Gender">
           <Key>
@@ -291,7 +292,7 @@
             <End Role="ProductType" EntitySet="ProductType" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
           <Property Type="Binary" Name="definition" Nullable="true" />
@@ -346,6 +347,7 @@
           <Property Name="IdRole" Type="Int32" Nullable="false" />
           <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="ClientProduct" Relationship="RentOfEquipmentModel.FK_ClientProduct_Employee" FromRole="Employee" ToRole="ClientProduct" />
           <NavigationProperty Name="Role" Relationship="RentOfEquipmentModel.FK_Employee_Role" FromRole="Employee" ToRole="Role" />
         </EntityType>
@@ -469,7 +471,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -529,6 +531,7 @@
           <EntitySetMapping Name="Employee">
             <EntityTypeMapping TypeName="RentOfEquipmentModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Login" ColumnName="Login" />
                 <ScalarProperty Name="IdRole" ColumnName="IdRole" />
@@ -589,7 +592,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

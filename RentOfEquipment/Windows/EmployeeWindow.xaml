@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:RentOfEquipment.Windows"
         mc:Ignorable="d"
         Title="EmployeeWindow" 
+        WindowStartupLocation="CenterScreen"
         Height="600" Width="1000">
     <Window.Resources>
         <Style x:Key="FocusVisual">
@@ -98,9 +99,104 @@
         
         <ListView x:Name="lvEmployee"
                   Grid.Row="2"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                   KeyDown="lvEmployee_KeyDown"
                   MouseDoubleClick="lvEmployee_MouseDoubleClick">
-            <ListView.View>
+
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border Background="#FF9AFBFB"
+                Width="700"
+                Height="100"
+                BorderThickness="1"
+                BorderBrush="#FF1A1157"
+                CornerRadius="10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- 1 -->
+                            <Image x:Name="photoEmpl"
+                                    Margin="10"
+                                    Grid.RowSpan="3">
+                                <Image.Source>
+                                    <Binding Path="Photo">
+                                        <Binding.TargetNullValue>
+                                            <ImageSource>/RentOfEquipment;component/Res/user2.png</ImageSource>
+                                        </Binding.TargetNullValue>
+                                    </Binding>
+                                </Image.Source>
+                            </Image>
+                            
+                            <!-- 2 -->
+                            <TextBlock Text="Фамилия"
+                           FontSize="18"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Right"
+                           Margin="10 0"
+                           Grid.Column="1"
+                           Grid.Row="0"/>
+
+                            <TextBlock Text="Имя"
+                           FontSize="18"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Right"
+                           Margin="10 0"
+                           Grid.Column="1"
+                           Grid.Row="1"/>
+
+                            <TextBlock Text="Отчество"
+                           FontSize="18"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Right"
+                           Margin="10 0"
+                           Grid.Column="1"
+                           Grid.Row="2"/>
+                            
+                            <TextBlock Text="{Binding LastName}"
+                           FontSize="18"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
+                           Margin="10 0"
+                           Grid.Column="2"
+                           Grid.Row="0"/>
+
+                            <TextBlock Text="{Binding FirstName}"
+                           FontSize="18"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
+                           Margin="10 0"
+                           Grid.Column="2"
+                           Grid.Row="1"/>
+
+                            <TextBlock Text="{Binding MiddleName}"
+                           FontSize="18"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
+                           Margin="10 0"
+                           Grid.Column="2"
+                           Grid.Row="2"/>
+                        </Grid>
+                    </Border>
+                </DataTemplate> 
+            </ListView.ItemTemplate>
+            
+            <!--<ListView.View>
                 <GridView>
                     <GridViewColumn Header="Код" Width="70" DisplayMemberBinding="{Binding Id}"/>
                     <GridViewColumn Header="Фамилия" Width="150" DisplayMemberBinding="{Binding LastName}"/>
@@ -110,7 +206,7 @@
                     <GridViewColumn Header="Почта" Width="150" DisplayMemberBinding="{Binding Email}"/>
                     <GridViewColumn Header="Должность" Width="150" DisplayMemberBinding="{Binding Role.NameRole}"/>
                 </GridView>
-            </ListView.View>
+            </ListView.View>-->
         </ListView>
 
         <Button x:Name="btnAddEmployee"
